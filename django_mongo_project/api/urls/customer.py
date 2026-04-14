@@ -1,0 +1,16 @@
+# api/urls.py
+from django.urls import path
+from api.views.customer import *
+from api.views.google_auth import google_login
+
+urlpatterns = [
+    path('register/', api_register, name='api-register'),
+    path('login/', api_login, name='api-login'),
+    path('logout/', api_logout, name='api-logout'),
+    path('session/', get_session_customer, name='get-session-customer'),
+    path('google-login/', google_login, name='google-login'),
+
+    path('get_customer/<str:customer_id>/', get_customer, name='get_customer'),
+    path('up_date/<str:customer_id>/', update_customer, name='update_customer'),
+    path('get_all/', get_all_customers, name='get_all'),
+]
