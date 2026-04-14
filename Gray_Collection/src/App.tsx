@@ -1,53 +1,55 @@
 import React, { useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation } from
-'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import { FloatingContactButtons } from './components/FloatingContactButtons';
+import { Footer } from './components/Footer';
+import { Header } from './components/Header';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
-import { ErrorBoundary } from './components/ErrorBoundary';
-import { Header } from './components/Header';
-import { Footer } from './components/Footer';
-import { FloatingContactButtons } from './components/FloatingContactButtons';
-import { HomePage } from './pages/HomePage';
-import { CollectionPage } from './pages/CollectionPage';
-import { ProductPage } from './pages/ProductPage';
+import { AboutPage } from './pages/AboutPage';
+import { ArchivePage } from './pages/ArchivePage';
 import { CartPage } from './pages/CartPage';
 import { CheckoutPage } from './pages/CheckoutPage';
-import { ArchivePage } from './pages/ArchivePage';
-import { AboutPage } from './pages/AboutPage';
-import { LoginPage } from './pages/LoginPage';
-import { ProfilePage } from './pages/ProfilePage';
-import { MomoReturnPage } from './pages/MomoReturnPage';
-import { VnpayReturnPage } from './pages/VnpayReturnPage';
-import { OrderSuccessPage } from './pages/OrderSuccessPage';
-import { WishlistPage } from './pages/WishlistPage';
+import { CollectionPage } from './pages/CollectionPage';
 import { GiftSetPage } from './pages/GiftSetPage';
+import { HomePage } from './pages/HomePage';
+import { LoginPage } from './pages/LoginPage';
+import { MomoReturnPage } from './pages/MomoReturnPage';
 import { NotFoundPage } from './pages/NotFoundPage';
-// Scroll to top on route change
+import { OrderSuccessPage } from './pages/OrderSuccessPage';
+import { PaymentPolicyPage } from './pages/PaymentPolicyPage';
+import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
+import { ProductPage } from './pages/ProductPage';
+import { ProfilePage } from './pages/ProfilePage';
+import { VnpayReturnPage } from './pages/VnpayReturnPage';
+import { WarrantyPolicyPage } from './pages/WarrantyPolicyPage';
+import { WishlistPage } from './pages/WishlistPage';
+
 function ScrollToTop() {
   const { pathname } = useLocation();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
   return null;
 }
-// Layout component to conditionally render Header/Footer
-function Layout({ children }: {children: React.ReactNode;}) {
+
+function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const isCheckout = location.pathname === '/checkout';
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex min-h-screen flex-col">
       {!isCheckout && <Header />}
       <main className="flex-grow">{children}</main>
       {!isCheckout && <Footer />}
       <FloatingContactButtons />
-    </div>);
-
+    </div>
+  );
 }
+
 export function App() {
   return (
     <ErrorBoundary>
@@ -72,6 +74,9 @@ export function App() {
                   <Route path="/order-success" element={<OrderSuccessPage />} />
                   <Route path="/momo-return" element={<MomoReturnPage />} />
                   <Route path="/vnpay-return" element={<VnpayReturnPage />} />
+                  <Route path="/chinh-sach-bao-mat" element={<PrivacyPolicyPage />} />
+                  <Route path="/chinh-sach-thanh-toan" element={<PaymentPolicyPage />} />
+                  <Route path="/chinh-sach-bao-hanh-doi-tra" element={<WarrantyPolicyPage />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </Layout>
@@ -79,6 +84,6 @@ export function App() {
           </CartProvider>
         </WishlistProvider>
       </AuthProvider>
-    </ErrorBoundary>);
-
+    </ErrorBoundary>
+  );
 }
