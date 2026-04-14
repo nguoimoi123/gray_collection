@@ -160,6 +160,7 @@ DEFAULT_CORS_ALLOWED_ORIGINS = (
     "https://vjv1p900-5174.asse.devtunnels.ms,"
     "https://grayperfume.com,"
     "https://gray-collection.onrender.com,"
+    "https://gray-collection-admin.vercel.app,"
 )
 
 CORS_ALLOWED_ORIGINS = config(
@@ -185,6 +186,7 @@ CSRF_TRUSTED_ORIGINS = config(
         "https://*.asse.devtunnels.ms,"
         "https://grayperfume.com,"
         "https://gray-collection.onrender.com,"
+        "https://gray-collection-admin.vercel.app,"
     ),
     cast=Csv(),
 )
