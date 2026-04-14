@@ -147,27 +147,36 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Cấu hình CORS - CHỈ cho phép các origin cụ thể (KHÔNG dùng CORS_ALLOW_ALL_ORIGINS)
-DEFAULT_CORS_ALLOWED_ORIGINS = (
-    "https://fontend-8jcm.onrender.com,"
-    "http://localhost:5173,"
-    "http://127.0.0.1:5173,"
-    "http://localhost:5174,"
-    "http://127.0.0.1:5174,"
-    "http://localhost:8000,"
-    "http://127.0.0.1:8000,"
-    "https://vjv1p900-5173.asse.devtunnels.ms,"
-    "https://vjv1p900-8000.asse.devtunnels.ms,"
-    "https://vjv1p900-5174.asse.devtunnels.ms,"
-    "https://grayperfume.com,"
-    "https://gray-collection.onrender.com,"
-    "https://gray-collection-admin.vercel.app,"
-)
+# DEFAULT_CORS_ALLOWED_ORIGINS = (
+#     "https://fontend-8jcm.onrender.com,"
+#     "http://localhost:5173,"
+#     "http://127.0.0.1:5173,"
+#     "http://localhost:5174,"
+#     "http://127.0.0.1:5174,"
+#     "http://localhost:8000,"
+#     "http://127.0.0.1:8000,"
+#     "https://vjv1p900-5173.asse.devtunnels.ms,"
+#     "https://vjv1p900-8000.asse.devtunnels.ms,"
+#     "https://vjv1p900-5174.asse.devtunnels.ms,"
+#     "https://grayperfume.com,"
+#     "https://gray-collection.onrender.com,"
+#     "https://gray-collection-admin.vercel.app,"
+# )
 
-CORS_ALLOWED_ORIGINS = config(
-    'CORS_ALLOWED_ORIGINS',
-    default=DEFAULT_CORS_ALLOWED_ORIGINS,
-    cast=Csv(),
-)
+CORS_ALLOWED_ORIGINS = [
+    "https://grayperfume.com",
+    "https://gray-collection.onrender.com",
+    "https://gray-collection-admin.vercel.app",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://grayperfume.com",
+    "https://gray-collection.onrender.com",
+    "https://gray-collection-admin.vercel.app",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https://[a-z0-9-]+-5173\.asse\.devtunnels\.ms$",
     r"^https://[a-z0-9-]+-5174\.asse\.devtunnels\.ms$",
@@ -175,21 +184,21 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
 CORS_ALLOW_CREDENTIALS = True
 SESSION_SAVE_EVERY_REQUEST = True
 
-CSRF_TRUSTED_ORIGINS = config(
-    'CSRF_TRUSTED_ORIGINS',
-    default=(
-        "https://fontend-8jcm.onrender.com,"
-        "http://localhost:5173,"
-        "http://127.0.0.1:5173,"
-        "http://localhost:5174,"
-        "http://127.0.0.1:5174,"
-        "https://*.asse.devtunnels.ms,"
-        "https://grayperfume.com,"
-        "https://gray-collection.onrender.com,"
-        "https://gray-collection-admin.vercel.app,"
-    ),
-    cast=Csv(),
-)
+# CSRF_TRUSTED_ORIGINS = config(
+#     'CSRF_TRUSTED_ORIGINS',
+#     default=(
+#         "https://fontend-8jcm.onrender.com,"
+#         "http://localhost:5173,"
+#         "http://127.0.0.1:5173,"
+#         "http://localhost:5174,"
+#         "http://127.0.0.1:5174,"
+#         "https://*.asse.devtunnels.ms,"
+#         "https://grayperfume.com,"
+#         "https://gray-collection.onrender.com,"
+#         "https://gray-collection-admin.vercel.app,"
+#     ),
+#     cast=Csv(),
+# )
 
 # Cho phép custom header X-Admin-Key qua CORS
 from corsheaders.defaults import default_headers
