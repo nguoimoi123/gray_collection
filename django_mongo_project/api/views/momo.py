@@ -64,7 +64,16 @@ def create_momo_payment(request):
     request_id = str(uuid.uuid4())
     momo_order_id = f"{order_id}_{int(datetime.now().timestamp())}"
     redirect_url = f"{FRONTEND_URL}/momo-return"
-    ipn_url = config("MOMO_IPN_URL", default="https://webhook.site/momo-ipn-placeholder")
+    ipn_url = config("MOMO_IPN_URL", default="")
+
+    # Chặn thanh toán nếu IPN URL chưa được cấu hình đúng (production safety)
+    if not ipn_url or "placeholder" in ipn_url or "webhook.site" in ipn_url:
+        from django.conf import settings as django_settings
+        if not django_settings.DEBUG:
+            return Response(
+                {"error": "Cau hinh MOMO_IPN_URL chua dung. Vui long lien he admin."},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
     request_type = "payWithMethod"
     extra_data = ""
     order_info = f"Thanh toan don hang {str(order_id)[-8:]}"

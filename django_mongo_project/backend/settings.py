@@ -26,7 +26,8 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Cho phép truy cập từ các host này
-ALLOWED_HOSTS = ['*']
+# Production: thay bằng domain thật, ví dụ: ['yourdomain.com', 'api.yourdomain.com']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
 
 # Đọc các API Key
 OPENAI_API_KEY = config('OPENAI_API_KEY')
@@ -58,13 +59,13 @@ INSTALLED_APPS = [
     'cloudinary_storage',
 ]
 
-# settings.py
+# Cloudinary - đọc credentials từ .env (KHÔNG hardcode trong source code)
 import cloudinary
 
-cloudinary.config( 
-  cloud_name = "dze6buir3", 
-  api_key = "652542943279132", 
-  api_secret = "gzeC-JTXYAWpP3udjSDGw06C66A"
+cloudinary.config(
+    cloud_name=config('CLOUDINARY_CLOUD_NAME'),
+    api_key=config('CLOUDINARY_API_KEY'),
+    api_secret=config('CLOUDINARY_API_SECRET'),
 )
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
@@ -111,7 +112,8 @@ DATABASES = {
 # Kết nối đến MongoDB cho các model của bạn
 mongoengine.connect(
     host=config('MONGODB_URI'),
-    tlsAllowInvalidCertificates=True  # Tạm thời bypass SSL certificate verification cho development
+    tls=True,
+    tlsCAFile=certifi.where(),  # Sử dụng CA certificates từ certifi thay vì bypass SSL
 )
 
 
@@ -144,19 +146,30 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Cấu hình CORS
+# Cấu hình CORS - CHỈ cho phép các origin cụ thể (KHÔNG dùng CORS_ALLOW_ALL_ORIGINS)
 CORS_ALLOWED_ORIGINS = [
     "https://fontend-8jcm.onrender.com",
-    "http://localhost:5173", # Cổng mặc định của Vite (React)
-]
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_ALL_ORIGINS = True
-SESSION_SAVE_EVERY_REQUEST = True
-CORS_ALLOWED_ORIGINS += [
+    "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "http://localhost:5174",   # Admin panel
+    "http://127.0.0.1:5174",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
 ]
+CORS_ALLOW_CREDENTIALS = True
+SESSION_SAVE_EVERY_REQUEST = True
+
+# Cho phép custom header X-Admin-Key qua CORS
+from corsheaders.defaults import default_headers
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'x-admin-key',
+]
+
+# Bảo mật session cookie
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+# Production: bật dòng dưới khi có HTTPS
+# SESSION_COOKIE_SECURE = True
 
 # Cấu hình Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -168,7 +181,25 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='support@techhub.com')
 
-# Disable SSL verification for development (enable in production with proper certificates)
-if DEBUG:
-    import ssl
-    ssl._create_default_https_context = ssl._create_unverified_context
+# Throttle/Rate limiting cho API
+REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '60/minute',
+        'user': '120/minute',
+    },
+}
+
+# === BẢO MẬT PRODUCTION ===
+# Tự động bật khi DEBUG=False (deploy production)
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 31536000         # 1 năm
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

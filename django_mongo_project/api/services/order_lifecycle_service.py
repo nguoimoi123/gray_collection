@@ -33,7 +33,17 @@ def resolve_variant(product_id: str, variant_size_ml: int | None) -> ProductVari
     return _objects(ProductVariant)(product=product_id, size_ml=variant_size_ml, is_active=True).first()
 
 
+MAX_QUANTITY_PER_ITEM = 100  # Giới hạn tối đa mỗi item trong đơn hàng
+
+
 def build_order_item(product_id: str, quantity: int, variant_size_ml: int | None) -> OrderItem:
+    if quantity < 1:
+        raise OrderLifecycleError("So luong san pham phai lon hon 0.")
+    if quantity > MAX_QUANTITY_PER_ITEM:
+        raise OrderLifecycleError(
+            f"So luong toi da moi san pham la {MAX_QUANTITY_PER_ITEM}. Ban dang dat {quantity}."
+        )
+
     try:
         product = _objects(Product).get(id=product_id)
     except (DoesNotExist, ValidationError):

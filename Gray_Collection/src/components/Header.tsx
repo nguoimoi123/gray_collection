@@ -1,5 +1,5 @@
-import React from 'react';
-import { Heart, Search, ShoppingBag, User } from 'lucide-react';
+import React, { useState } from 'react';
+import { Heart, Menu, Search, ShoppingBag, User, X } from 'lucide-react';
 import { Link, NavLink } from 'react-router-dom';
 
 import { useAuth } from '../context/AuthContext';
@@ -12,14 +12,33 @@ function navClass(isActive: boolean) {
   }`;
 }
 
+function mobileNavClass(isActive: boolean) {
+  return `block py-3 text-sm font-medium uppercase tracking-[0.2em] transition-colors ${
+    isActive ? 'text-sage-700' : 'text-brand-gray hover:text-brand-dark'
+  }`;
+}
+
 export function Header() {
   const { cartCount } = useCart();
   const { items } = useWishlist();
   const { isAuthenticated } = useAuth();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/95 backdrop-blur">
       <div className="mx-auto flex h-[5.5rem] max-w-7xl items-center justify-between px-6">
+        {/* Mobile menu button */}
+        <button
+          type="button"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="inline-flex items-center justify-center text-brand-dark transition-colors hover:text-sage-600 md:hidden"
+          aria-label={isMobileMenuOpen ? 'Đóng menu' : 'Mở menu'}
+        >
+          {isMobileMenuOpen ? <X size={24} strokeWidth={1.5} /> : <Menu size={24} strokeWidth={1.5} />}
+        </button>
+
         <Link to="/" className="flex items-center">
           <img src="/image.png" alt="Gray Collection" className="h-20 object-contain" />
         </Link>
@@ -70,6 +89,29 @@ export function Header() {
           </Link>
         </div>
       </div>
+
+      {/* Mobile menu overlay */}
+      {isMobileMenuOpen && (
+        <div className="border-t border-gray-100 bg-white px-6 pb-6 pt-4 shadow-lg md:hidden">
+          <nav className="space-y-1">
+            <NavLink to="/collection" className={({ isActive }) => mobileNavClass(isActive)} onClick={closeMobileMenu}>
+              Mùi Hương
+            </NavLink>
+            <NavLink to="/" end className={({ isActive }) => mobileNavClass(isActive)} onClick={closeMobileMenu}>
+              Bộ Sưu Tập
+            </NavLink>
+            <NavLink to="/gift-set" className={({ isActive }) => mobileNavClass(isActive)} onClick={closeMobileMenu}>
+              Gift Set
+            </NavLink>
+            <NavLink to="/archive" className={({ isActive }) => mobileNavClass(isActive)} onClick={closeMobileMenu}>
+              Lưu Trữ
+            </NavLink>
+            <NavLink to="/about" className={({ isActive }) => mobileNavClass(isActive)} onClick={closeMobileMenu}>
+              Giới Thiệu
+            </NavLink>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

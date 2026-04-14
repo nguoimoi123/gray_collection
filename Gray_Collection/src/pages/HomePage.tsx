@@ -219,7 +219,7 @@ export function HomePage() {
   return (
     <div className="min-h-screen">
       <section className="relative h-[90vh] w-full overflow-hidden">
-        <img src="../../public/Home_3.jpg" alt="Perfume Hero" className="absolute inset-0 h-full w-full object-cover" />
+        <img src="/Home_3.jpg" alt="Perfume Hero" className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-black/30" />
 
         <div className="absolute inset-0 flex items-center">

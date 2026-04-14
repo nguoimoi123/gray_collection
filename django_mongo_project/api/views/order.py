@@ -6,6 +6,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from api.decorators.decorators import require_session_auth
+
 from api.models.customer import Customer
 from api.models.order import Order
 from api.models.review import Review
@@ -39,6 +41,7 @@ def get_all_reviews(request):
 
 
 @api_view(["GET"])
+@require_session_auth
 def get_orders_by_customer(request, customer_id):
     try:
         orders = _visible_orders().filter(customer=customer_id).order_by("-created_at")
@@ -49,6 +52,7 @@ def get_orders_by_customer(request, customer_id):
 
 
 @api_view(["GET"])
+@require_session_auth
 def get_order_detail(request, order_id):
     try:
         order = _visible_orders().get(id=order_id)
@@ -63,6 +67,7 @@ def get_order_detail(request, order_id):
 
 
 @api_view(["POST"])
+@require_session_auth
 def create_order(request):
     customer_id = request.data.get("customer")
     if not customer_id:
@@ -111,6 +116,7 @@ def create_order(request):
 
 
 @api_view(["GET"])
+@require_session_auth
 def get_all_orders(request):
     try:
         orders = _visible_orders().no_dereference().all()
@@ -121,6 +127,7 @@ def get_all_orders(request):
 
 
 @api_view(["PUT", "PATCH"])
+@require_session_auth
 def update_order_status(request, order_id):
     new_status = request.data.get("status")
     if not new_status:

@@ -119,6 +119,7 @@ def get_session_customer(request):
 
 
 @api_view(["GET"])
+@require_session_auth
 def get_customer(request, customer_id):
     try:
         customer = _objects(Customer).get(id=customer_id)
@@ -131,6 +132,7 @@ def get_customer(request, customer_id):
 
 
 @api_view(["PATCH"])
+@require_session_auth
 def update_customer(request, customer_id):
     try:
         customer = _objects(Customer).get(id=customer_id)
@@ -152,6 +154,7 @@ def update_customer(request, customer_id):
 
 
 @api_view(["GET"])
+@require_session_auth
 def get_all_customers(request):
     try:
         city = request.query_params.get("city")

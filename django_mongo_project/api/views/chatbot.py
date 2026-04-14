@@ -459,4 +459,4 @@ def chatbot(request):
             import traceback
             trace = traceback.format_exc()
             print(f"[AGENT ERROR] Lỗi khi gọi OpenAI API: {e}\n{trace}")
-            return JsonResponse({"error": "Lỗi máy chủ Agent.", "detail": str(e), "trace": trace}, status=500)
+            return JsonResponse({"error": "Lỗi máy chủ Agent. Vui lòng thử lại sau."}, status=500)

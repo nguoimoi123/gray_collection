@@ -8,8 +8,10 @@ import {
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import { FloatingContactButtons } from './components/FloatingContactButtons';
 import { HomePage } from './pages/HomePage';
 import { CollectionPage } from './pages/CollectionPage';
 import { ProductPage } from './pages/ProductPage';
@@ -24,6 +26,7 @@ import { VnpayReturnPage } from './pages/VnpayReturnPage';
 import { OrderSuccessPage } from './pages/OrderSuccessPage';
 import { WishlistPage } from './pages/WishlistPage';
 import { GiftSetPage } from './pages/GiftSetPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 // Scroll to top on route change
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -41,37 +44,41 @@ function Layout({ children }: {children: React.ReactNode;}) {
       {!isCheckout && <Header />}
       <main className="flex-grow">{children}</main>
       {!isCheckout && <Footer />}
+      <FloatingContactButtons />
     </div>);
 
 }
 export function App() {
   return (
-    <AuthProvider>
-      <WishlistProvider>
-        <CartProvider>
-          <Router>
-            <ScrollToTop />
-            <Layout>
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/collection" element={<CollectionPage />} />
-                <Route path="/product/:id" element={<ProductPage />} />
-                <Route path="/gift-set" element={<GiftSetPage />} />
-                <Route path="/wishlist" element={<WishlistPage />} />
-                <Route path="/cart" element={<CartPage />} />
-                <Route path="/checkout" element={<CheckoutPage />} />
-                <Route path="/archive" element={<ArchivePage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/order-success" element={<OrderSuccessPage />} />
-                <Route path="/momo-return" element={<MomoReturnPage />} />
-                <Route path="/vnpay-return" element={<VnpayReturnPage />} />
-              </Routes>
-            </Layout>
-          </Router>
-        </CartProvider>
-      </WishlistProvider>
-    </AuthProvider>);
+    <ErrorBoundary>
+      <AuthProvider>
+        <WishlistProvider>
+          <CartProvider>
+            <Router>
+              <ScrollToTop />
+              <Layout>
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/collection" element={<CollectionPage />} />
+                  <Route path="/product/:id" element={<ProductPage />} />
+                  <Route path="/gift-set" element={<GiftSetPage />} />
+                  <Route path="/wishlist" element={<WishlistPage />} />
+                  <Route path="/cart" element={<CartPage />} />
+                  <Route path="/checkout" element={<CheckoutPage />} />
+                  <Route path="/archive" element={<ArchivePage />} />
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/order-success" element={<OrderSuccessPage />} />
+                  <Route path="/momo-return" element={<MomoReturnPage />} />
+                  <Route path="/vnpay-return" element={<VnpayReturnPage />} />
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+              </Layout>
+            </Router>
+          </CartProvider>
+        </WishlistProvider>
+      </AuthProvider>
+    </ErrorBoundary>);
 
 }

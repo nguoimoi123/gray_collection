@@ -97,6 +97,48 @@ def get_reviews_by_product_id(request, product_id):
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+# --- API Thêm Đánh Giá Mới (Xác thực bằng session) ---
+from api.decorators.decorators import require_session_auth
+
+@api_view(['POST'])
+@require_session_auth
+def add_review_with_session(request):
+    """Thêm đánh giá — yêu cầu user đã đăng nhập qua session."""
+    try:
+        data = request.data.copy()
+        # Đảm bảo customer_id lấy từ session (không cho client tự truyền)
+        session_user_id = request.session.get("user_id")
+        if session_user_id:
+            data['customer_id'] = session_user_id
+
+        serializer = ReviewSerializer(data=data)
+        if serializer.is_valid():
+            review = cast(Review, serializer.save())
+            review_id = str(getattr(review, "id", getattr(review, "pk", "")))
+            logger.info(f"Review created via session auth for product {review.product_id}")
+
+            # Tự động tạo phản hồi AI
+            try:
+                ai_text = generate_ai_response_text(review.rating, review.comment, "sản phẩm")
+                _objects(AdminResponse).create(
+                    review_id=review_id,
+                    response=ai_text,
+                    admin_id='ai-assistant',
+                    admin_name='AI Assistant',
+                    response_type='ai'
+                )
+                logger.info(f"AI response auto-generated for review {review_id}")
+            except Exception as ai_err:
+                logger.error(f"Failed to auto-generate AI response for review {review_id}: {ai_err}")
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        logger.error(f"Error in add_review_with_session: {e}")
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 # --- 1. API Thêm Đánh Giá Mới (Phiên bản an toàn) ---
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

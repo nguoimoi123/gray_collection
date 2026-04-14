@@ -1,3 +1,4 @@
+import './services/api'; // Đăng ký axios interceptor (X-Admin-Key) sớm nhất
 import './index.css';
 import React from "react";
 import { createRoot } from "react-dom/client";

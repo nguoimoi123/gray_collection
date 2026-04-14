@@ -2,9 +2,22 @@ import axios from 'axios';
 import { ChatbotResponse, ChatHistoryItem } from '../types/chat';
 
 const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000/api').replace(/\/+$/, '');
+const ADMIN_KEY = import.meta.env.VITE_ADMIN_SECRET_KEY || '';
+
+// Gắn X-Admin-Key vào MỌI request axios (kể cả axios.get trực tiếp)
+// Cần thiết vì nhiều component gọi axios trực tiếp thay vì apiClient
+if (ADMIN_KEY) {
+  axios.interceptors.request.use((config) => {
+    config.headers['X-Admin-Key'] = ADMIN_KEY;
+    return config;
+  });
+}
 
 const apiClient = axios.create({
   baseURL: API_URL,
+  headers: {
+    ...(ADMIN_KEY ? { 'X-Admin-Key': ADMIN_KEY } : {}),
+  },
 });
 
 export const chatService = {
