@@ -166,13 +166,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOWED_ORIGINS = [
     "https://grayperfume.com",
     "https://gray-collection.onrender.com",
-    "https://gray-collection-admin.vercel.app",
+    "https://gray-collection-admin-quans-projects-4165ef3a.vercel.app",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://grayperfume.com",
     "https://gray-collection.onrender.com",
-    "https://gray-collection-admin.vercel.app",
+    "https://gray-collection-admin-quans-projects-4165ef3a.vercel.app",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
