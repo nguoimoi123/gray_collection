@@ -182,9 +182,9 @@ CSRF_TRUSTED_ORIGINS = config(
         "http://127.0.0.1:5173,"
         "http://localhost:5174,"
         "http://127.0.0.1:5174,"
-        "https://*.asse.devtunnels.ms"
-        "https://grayperfume.com",
-        "https://gray-collection.onrender.com",
+        "https://*.asse.devtunnels.ms,"
+        "https://grayperfume.com,"
+        "https://gray-collection.onrender.com,"
     ),
     cast=Csv(),
 )
