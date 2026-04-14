@@ -232,8 +232,7 @@ export function HomePage() {
                 <span className="font-serif italic font-normal">dành cho bạn</span>
               </h1>
               <p className="mb-10 max-w-md text-lg leading-relaxed text-white/90">
-                Khám phá thế giới mùi hương nữ, nam và unisex với nhiều lựa chọn 5ml, 10ml, 20ml để dễ test mùi, dễ mang theo và dễ chọn đúng gu.
-              </p>
+Khám phá thế giới mùi hương nam, nữ và unisex với nhiều lựa chọn 10ml, 30ml, 100ml để dễ test mùi, dễ mang theo và dễ lựa chọn              </p>
               <div className="flex flex-wrap gap-4">
                 <Link to="/collection" className="bg-sage-600 px-8 py-4 text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-sage-700">
                   Xem bộ sưu tập
