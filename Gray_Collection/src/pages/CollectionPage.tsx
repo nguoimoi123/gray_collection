@@ -103,7 +103,7 @@ export function CollectionPage() {
     <div className="min-h-screen px-6 pb-24 pt-12">
       <div className="mx-auto max-w-7xl">
         <header className="mb-16 border-b border-gray-200 pb-12">
-          <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.25em] text-mint-500">Gray Collection</p>
+          <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.25em] text-mint-500">Gray Perfume</p>
           <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl">
               <h1 className="mb-6 text-5xl font-serif italic md:text-6xl">Bộ sưu tập mùi hương</h1>
