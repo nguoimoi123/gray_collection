@@ -158,6 +158,8 @@ DEFAULT_CORS_ALLOWED_ORIGINS = (
     "https://vjv1p900-5173.asse.devtunnels.ms,"
     "https://vjv1p900-8000.asse.devtunnels.ms,"
     "https://vjv1p900-5174.asse.devtunnels.ms,"
+    "https://grayperfume.com,"
+    "https://gray-collection.onrender.com,"
 )
 
 CORS_ALLOWED_ORIGINS = config(
