@@ -236,8 +236,13 @@ export function ProductFormCard({ isDark, prefill, onSuccess }: ProductFormCardP
 
       if (form.id) {
         payload.product_id = form.id;
-        payload.mainImage = form.mainImage || '';
         payload.galleryImages = form.galleryImages || [];
+
+        if (mainImageFile) {
+          payload.mainImageUpload = true;
+        } else if (form.mainImage) {
+          payload.mainImage = form.mainImage;
+        }
       }
 
       const uploadFiles: File[] = [];

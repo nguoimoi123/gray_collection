@@ -87,12 +87,12 @@ export function GiftSetPage() {
           </div>
           <div className="rounded-[1.75rem] border border-white/70 bg-white/70 p-6 backdrop-blur">
             <div className="mb-4 inline-flex rounded-full bg-[#f1e2c7] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.25em] text-[#8a6030]">
-              Gợi ý dùng
+              Chọn quà dễ hơn
             </div>
             <div className="space-y-3 text-sm leading-7 text-[#554532]">
-              <p>Set sinh nhật, Valentine, 8/3, 20/10 hoặc sale cuối tháng.</p>
-              <p>Admin có thể chọn từng sản phẩm, chọn ml, số lượng và quà tặng kèm trong dashboard.</p>
-              <p>Nút thanh toán trên từng set sẽ đưa toàn bộ món trong set vào giỏ để khách checkout ngay.</p>
+              <p>Phù hợp để tặng sinh nhật, kỷ niệm, dịp lễ hoặc gửi tặng người bạn quan tâm.</p>
+              <p>Mỗi set đã được phối sẵn mùi hương và dung tích để dễ chọn, tiết kiệm thời gian hơn khi mua quà.</p>
+              <p>Bạn có thể thêm toàn bộ set vào giỏ chỉ với một lần bấm và thanh toán ngay như các sản phẩm thông thường.</p>
             </div>
           </div>
         </header>

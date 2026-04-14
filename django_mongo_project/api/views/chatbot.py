@@ -148,7 +148,16 @@ def chatbot(request):
                         remaining_uploaded_urls = remaining_uploaded_urls[1:]
                     payload.pop("mainImageUpload", None)
 
-                combined_gallery = [*existing_gallery, *remaining_uploaded_urls]
+                main_image_url = str(payload.get("mainImage") or "").strip()
+                combined_gallery = []
+                if main_image_url:
+                    combined_gallery.append(main_image_url)
+
+                for image_url in [*existing_gallery, *remaining_uploaded_urls]:
+                    cleaned_url = str(image_url or "").strip()
+                    if cleaned_url and cleaned_url not in combined_gallery:
+                        combined_gallery.append(cleaned_url)
+
                 payload["galleryImages"] = combined_gallery
             else:
                 existing_images = payload.get("images", [])
@@ -274,14 +283,49 @@ def chatbot(request):
                                 if detail:
                                     prefill.update({
                                         "description": function_args.get("description", detail.description),
+                                        "short_description": function_args.get("short_description", getattr(product, 'short_description', '')),
+                                        "subtitle": function_args.get("subtitle", detail.subtitle),
+                                        "story": function_args.get("story", detail.story),
+                                        "target_gender": function_args.get("target_gender", getattr(product, 'target_gender', 'unisex')),
+                                        "olfactory_family": function_args.get("olfactory_family", getattr(product, 'olfactory_family', '')),
+                                        "mood_traits": function_args.get("mood_traits", getattr(product, 'mood_traits', [])),
+                                        "top_notes": function_args.get("top_notes", detail.top_notes),
+                                        "heart_notes": function_args.get("heart_notes", detail.heart_notes),
+                                        "base_notes": function_args.get("base_notes", detail.base_notes),
+                                        "season": function_args.get("season", detail.season),
+                                        "occasion": function_args.get("occasion", detail.occasion),
+                                        "longevity": function_args.get("longevity", detail.longevity),
+                                        "sillage": function_args.get("sillage", detail.sillage),
+                                        "tags": function_args.get("tags", getattr(product, 'tags', [])),
                                         "features": function_args.get("features", detail.features),
                                         "specifications": function_args.get("specifications", detail.specifications),
                                         "inStock": function_args.get("inStock", detail.inStock),
                                     })
-                                    
+
                                     prefill["mainImage"] = getattr(product, 'image', '')
                                     prefill["galleryImages"] = getattr(detail, 'images', [])
-                                    
+
+                                variants = []
+                                try:
+                                    from api.models.productvariant import ProductVariant
+
+                                    variants = [
+                                        {
+                                            "size_ml": variant.size_ml,
+                                            "price": variant.price,
+                                            "original_price": getattr(variant, "original_price", ""),
+                                            "stock_quantity": getattr(variant, "stock_quantity", 0),
+                                            "sku": getattr(variant, "sku", ""),
+                                            "is_default": getattr(variant, "is_default", False),
+                                        }
+                                        for variant in ProductVariant.objects(product=product).order_by("size_ml")
+                                    ]
+                                except Exception:
+                                    variants = []
+
+                                if variants:
+                                    prefill["variants"] = variants
+
                                 return JsonResponse({
                                     "success": True,
                                     "action": "show_product_form",

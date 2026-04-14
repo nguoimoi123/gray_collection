@@ -109,7 +109,7 @@ export function CheckoutPage() {
       <header className="border-b border-gray-100 px-6 py-6">
         <div className="mx-auto flex max-w-6xl items-center justify-between">
           <Link to="/" className="flex items-center">
-            <img src="/image.png" alt="Gray Collection" className="h-8 object-contain" />
+            <img src="/image.png" alt="Gray Collection" className="h-20 object-contain" />
           </Link>
           <div className="text-[10px] font-bold uppercase tracking-[0.25em] text-sage-600">Thanh toán an toàn</div>
         </div>

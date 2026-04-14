@@ -275,8 +275,8 @@ Khám phá thế giới mùi hương nam, nữ và unisex với nhiều lựa ch
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-3">
           {[
             {
-              title: 'Chiết tiện dụng',
-              text: 'Nhiều size 5ml, 10ml, 20ml để bạn test mùi trước khi mua chai lớn.',
+              title: 'Đa dạng mẫu mã và mùi hương',
+              text: 'Nhiều size 10ml, 30ml, 100ml, có thể test mùi trước khi mua.',
             },
             {
               title: 'Theo tính chất mùi',
@@ -284,7 +284,7 @@ Khám phá thế giới mùi hương nam, nữ và unisex với nhiều lựa ch
             },
             {
               title: 'Dữ liệu thật từ shop',
-              text: 'Danh mục hiện đang đọc trực tiếp từ backend nên thuận tiện để mở rộng admin và checkout tiếp.',
+              text: 'Sản phẩm được đồng bộ trực tiếp từ hệ thống quản lý, giúp cập nhật nhanh và hiển thị chính xác trên website.',
             },
           ].map((item) => (
             <div key={item.title} className="bg-white p-8">
