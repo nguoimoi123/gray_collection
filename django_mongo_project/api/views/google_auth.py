@@ -1,5 +1,6 @@
 import json
 import logging
+import traceback
 from typing import Any
 
 from decouple import config
@@ -72,5 +73,11 @@ def google_login(request):
     except json.JSONDecodeError:
         return JsonResponse({"error": "Invalid JSON"}, status=400)
     except Exception as exc:
+        tb = traceback.format_exc()
         logger.exception("Unexpected error in google_login: %s", exc)
-        return JsonResponse({"error": str(exc)}, status=500)
+        return JsonResponse({
+            "error": str(exc),
+            "exception_type": type(exc).__name__,
+            "traceback": tb,
+        }, status=500)
+
