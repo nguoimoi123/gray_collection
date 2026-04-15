@@ -209,10 +209,10 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
 ]
 
 # Bảo mật session cookie
+# Cross-domain (FE Vercel ≠ BE Render) yêu cầu SameSite=None + Secure=True
 SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SAMESITE = 'Lax'
-# Production: bật dòng dưới khi có HTTPS
-# SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SECURE = True
 
 # Cấu hình Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -238,9 +238,11 @@ REST_FRAMEWORK = {
 
 # === BẢO MẬT PRODUCTION ===
 # Tự động bật khi DEBUG=False (deploy production)
+# Luôn bật SameSite=None cho cross-domain cookie (cả dev lẫn prod dùng HTTPS)
+CSRF_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SECURE = True
+
 if not DEBUG:
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
     SECURE_SSL_REDIRECT = True
     SECURE_HSTS_SECONDS = 31536000         # 1 năm
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
