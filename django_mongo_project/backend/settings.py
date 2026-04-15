@@ -209,7 +209,8 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
 ]
 
 # Bảo mật session cookie
-# Cross-domain (FE Vercel ≠ BE Render) yêu cầu SameSite=None + Secure=True
+# Dùng signed cookies thay vì SQLite (Render filesystem ephemeral → mất data mỗi lần deploy)
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SECURE = True
