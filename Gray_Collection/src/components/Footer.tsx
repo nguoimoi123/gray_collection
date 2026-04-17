@@ -91,14 +91,6 @@ export function Footer() {
               <ContactRow href="tel:0347320525">Thắng - 0347320525 </ContactRow>
               <ContactRow href="mailto:graycollection.per@gmail.com">graycollection.per@gmail.com</ContactRow>
             </div>
-
-            <div className="mt-6 inline-flex items-center gap-3 rounded-xl bg-[#1897e6] px-3 py-2 text-white shadow-sm">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#1897e6]">
-                <svg viewBox="0 0 24 24" className="h-8 w-8 fill-current" aria-hidden="true">
-                  <path d="m10 16.2-3.5-3.5-1.4 1.4 4.9 4.9L19 10l-1.4-1.4z" />
-                </svg>
-              </div>
-            </div>
           </div>
 
           <div>
