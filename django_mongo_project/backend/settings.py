@@ -73,6 +73,8 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.middleware.gzip.GZipMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -110,10 +112,19 @@ DATABASES = {
 }
 
 # Kết nối đến MongoDB cho các model của bạn
+# Connection pooling: giữ sẵn connections để tránh tạo mới mỗi request
 mongoengine.connect(
     host=config('MONGODB_URI'),
     tls=True,
-    tlsCAFile=certifi.where(),  # Sử dụng CA certificates từ certifi thay vì bypass SSL
+    tlsCAFile=certifi.where(),
+    maxPoolSize=10,
+    minPoolSize=2,
+    maxIdleTimeMS=45000,
+    connectTimeoutMS=10000,
+    serverSelectionTimeoutMS=10000,
+    socketTimeoutMS=20000,
+    retryWrites=True,
+    retryReads=True,
 )
 
 
@@ -142,6 +153,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
