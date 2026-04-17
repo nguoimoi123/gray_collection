@@ -81,15 +81,15 @@ export function Footer() {
           <div>
             <FooterTitle>Về GRAY COLLECTION</FooterTitle>
             <p className="mt-8 max-w-[35rem] text-[1.1rem] leading-[1.8] text-black">
-              &quot;Luxe - Art - Nostalgia&quot; Sang trọng là bản chất. Nghệ thuật là hình thái.
-              Hoài niệm là dấu vết. Mỗi mùi hương là một tuyên ngôn thầm lặng dành cho người có gu sống riêng biệt.
-            </p>
+              " Grace - Refinement - Art - Yearning " Thanh lịch là nét chạm đầu tiên. Tinh tế là cảm nhận ở lại. Nghệ thuật nhưng không phô bày. Hoài niệm nhưng không gọi tên. Mỗi tầng hương là một dấu ấn tinh tế
+              , dành riêng cho những người biết mình là ai và muốn để lại dư âm khác biệt.</p>
 
             <div className="mt-8 space-y-3">
-              <ContactRow href="tel:0589506666">Khương Đình - Hà Nội: 058 950 6666</ContactRow>
-              <ContactRow href="tel:0911165686">Hoà Mã - Hà Nội: 091116 5686</ContactRow>
-              <ContactRow href="tel:0855528668">Trần Quang Khải - HCM: 085 552 8668</ContactRow>
-              <ContactRow href="mailto:lanperfumestore@gmail.com">lanperfumestore@gmail.com</ContactRow>
+              <ContactRow href="tel:0906411472">Dương Hoà - 0906 411 472</ContactRow>
+              <ContactRow href="tel:0389104854">Mã Nhựt Nam - 0389 104 854</ContactRow>
+              <ContactRow href="tel:0522057634">Uyển Nhi - 0522057634</ContactRow>
+              <ContactRow href="tel:0347320525">Thắng - 0347320525 </ContactRow>
+              <ContactRow href="mailto:graycollection.per@gmail.com">graycollection.per@gmail.com</ContactRow>
             </div>
 
             <div className="mt-6 inline-flex items-center gap-3 rounded-xl bg-[#1897e6] px-3 py-2 text-white shadow-sm">
@@ -98,20 +98,15 @@ export function Footer() {
                   <path d="m10 16.2-3.5-3.5-1.4 1.4 4.9 4.9L19 10l-1.4-1.4z" />
                 </svg>
               </div>
-              <div className="text-left">
-                <div className="text-[0.72rem] font-semibold uppercase tracking-[0.18em]">Đã thông báo</div>
-                <div className="text-[1rem] font-bold leading-none">Bộ Công Thương</div>
-              </div>
             </div>
           </div>
 
           <div>
             <FooterTitle>Liên kết nhanh</FooterTitle>
             <div className="mt-8 flex flex-col items-start">
-              <FooterLink to="/about">Giới thiệu</FooterLink>
+              <FooterLink to="/">Trang chủ</FooterLink>
               <FooterLink to="/collection">Bộ sưu tập nước hoa</FooterLink>
-              <FooterLink to="/archive">Thương hiệu</FooterLink>
-              <FooterLink to="/archive">Tin tức</FooterLink>
+              <FooterLink to="/archive">Lưu trữ</FooterLink>
               <FooterLink to="/about">Liên hệ</FooterLink>
             </div>
           </div>
@@ -122,7 +117,7 @@ export function Footer() {
               <FooterLink to="/collection">Nước hoa nam</FooterLink>
               <FooterLink to="/collection">Nước hoa nữ</FooterLink>
               <FooterLink to="/collection">Nước hoa unisex</FooterLink>
-              <FooterLink to="/collection">Body spray</FooterLink>
+              <FooterLink to="/collection">Vhealth</FooterLink>
             </div>
           </div>
 
@@ -130,16 +125,8 @@ export function Footer() {
             <FooterTitle>Cửa hàng</FooterTitle>
             <div className="mt-8 space-y-4">
               <div>
-                <p className="text-[1.1rem] font-semibold text-black">Hà Nội</p>
-                <p className="mt-1 text-[1.05rem] leading-8 text-black">17 Ngõ 236 Khương Đình, Thanh Xuân, Hà Nội</p>
-              </div>
-              <div>
-                <p className="text-[1.1rem] font-semibold text-black">Hà Nội</p>
-                <p className="mt-1 text-[1.05rem] leading-8 text-black">108 Hoà Mã, Hai Bà Trưng, Hà Nội</p>
-              </div>
-              <div>
                 <p className="text-[1.1rem] font-semibold text-black">TP. Hồ Chí Minh</p>
-                <p className="mt-1 text-[1.05rem] leading-8 text-black">225F Trần Quang Khải, Tân Định, Quận 1, TP.HCM</p>
+                <p className="mt-1 text-[1.05rem] leading-8 text-black">114 An Dương Vương, Phường Phú Định, TP HCM</p>
               </div>
             </div>
           </div>
