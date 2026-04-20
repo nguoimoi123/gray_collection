@@ -1,6 +1,3 @@
-
-**`gray_collection/README.md`**
-```md
 # Gray Collection
 
 # 💻 Tech Stack
@@ -48,3 +45,9 @@ Dự án tập trung vào trải nghiệm mua sắm hiện đại với product 
 - `src/services/api.ts`: lớp gọi API sản phẩm, khách hàng, checkout
 - `src/types/`: định nghĩa type cho account và perfume
 
+## Cách chạy dự án
+
+### 1. Cài dependencies
+
+```bash
+npm install
